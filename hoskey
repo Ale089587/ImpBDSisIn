@@ -1,0 +1,26 @@
+create table playoffround
+
+id int (16) NOT NULL,
+team1ld int (13) NOT NULL,
+team2ld int (13)  NOT NULL,
+startTime date NOT NULL,
+endTime date NOT NULL,
+roundNum int (14) NOT NULL,
+PRIMARY KEY (id startTime);
+
+id int (16) NOT NULL,
+numShutouts date NOT NULL,
+goalleaderld int (13) NOT NULL,
+assistleaderld  int (13) NOT NULL,
+penaltyleaderld int (13) NOT NULL,
+plusminusleaderld int (13) NOT NULL,
+faceosffsWonleaderld int (13) NOT NULL,
+sogleaderld int (13) NOT NULL,
+PRIMARY KEY (id startTime);
+
+id int (16) NOT NULL,
+roundld int 
+startTime date NOT NULL,
+description 
+team1ld int 
+team2ld int 
