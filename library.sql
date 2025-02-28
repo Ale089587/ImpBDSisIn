@@ -61,3 +61,6 @@ VALUES
  --JOIN NATURAL
  --LEFT EXCLUDING JOIN
  --LEFT EXCLUDING JOIN
+
+
+--Crear las llaves foraneas posibles
