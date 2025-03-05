@@ -1,0 +1,197 @@
+mysql> use Ale089013$default;
+Database changed
+mysql> show tables 
+| Tables_in_Ale089013$default |
++-----------------------------+
+| detalle_horario             |
+| horario                     |
+| plantilla_detalle_horario   |
++-----------------------------+
+3 rows in set (0.00 sec)
+mysql> desc detalle_horario;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| horario_id         | int         | NO   | PRI | NULL    |       |
+| hora_salida        | date        | NO   | PRI | NULL    |       |
+| hora_entrada       | date        | NO   |     | NULL    |       |
+| codigo_incapacidad | varchar(25) | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+mysql> desc horario;
++--------------+------+------+-----+---------+----------------+
+| Field        | Type | Null | Key | Default | Extra          |
++--------------+------+------+-----+---------+----------------+
+| horario_id   | int  | NO   | PRI | NULL    | auto_increment |
+| plantilla_id | int  | YES  |     | NULL    |                |
++--------------+------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+mysql> desc plantilla_detalle_horario;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| plantilla_id       | int         | NO   | PRI | NULL    |       |
+| dia                | int         | NO   | PRI | NULL    |       |
+| codigo_incapacidad | varchar(25) | YES  |     | NULL    |       |
+| turno              | varchar(25) | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+mysql> select * from horario;
++------------+--------------+
+| horario_id | plantilla_id |
++------------+--------------+
+|          1 |            5 |
+|          2 |            1 |
+|          3 |            3 |
+|          4 |            2 |
+|          5 |            4 |
++------------+--------------+
+5 rows in set (0.00 sec)
+mysql> select * from plantilla_detalle_horario;
+mysql> desc plantilla_detalle_horario;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| plantilla_id       | int         | NO   | PRI | NULL    |       |
+| dia                | int         | NO   | PRI | NULL    |       |
+| codigo_incapacidad | varchar(25) | YES  |     | NULL    |       |
+| turno              | varchar(25) | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+mysql> select * from horario;
++------------+--------------+
+| horario_id | plantilla_id |
++------------+--------------+
+|          1 |            5 |
+|          2 |            1 |
+|          3 |            3 |
+|          4 |            2 |
+|          5 |            4 |
++------------+--------------+
+5 rows in set (0.00 sec)
+mysql> desc plantilla_detalle_horario;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| plantilla_id       | int         | NO   | PRI | NULL    |       |
+| dia                | int         | NO   | PRI | NULL    |       |
+| codigo_incapacidad | varchar(25) | YES  |     | NULL    |       |
+| turno              | varchar(25) | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+mysql> select * from horario;
++------------+--------------+
+| horario_id | plantilla_id |
++------------+--------------+
+|          1 |            5 |
+|          2 |            1 |
+|          3 |            3 |
+|          4 |            2 |
+|          5 |            4 |
++------------+--------------+
+5 rows in set (0.00 sec)
++--------------+-----+--------------------+--------+
+| plantilla_id | dia | codigo_incapacidad | turno  |
++--------------+-----+--------------------+--------+
+|            1 |   1 | NULL               | 1/10   |
+|            1 |   2 | NULL               | 1/11,5 |
+|            1 |   3 | NULL               | 1/10   |
+|            1 |   4 | NULL               | 1/11,5 |
+|            1 |   5 | NULL               | 1/10   |
+|            1 |   6 | vacaciones         | NULL   |
+|            1 |   7 | vacaciones         | NULL   |
+|            2 |   1 | NULL               | 2/11,5 |
+|            2 |   2 | NULL               | 1/11,5 |
+|            2 |   3 | NULL               | 2/11,5 |
+|            2 |   4 | NULL               | 1|11.5 |
+|            2 |   5 | NULL               | 1/11,5 |
+|            2 |   6 | vacaciones         | NULL   |
+|            2 |   7 | vacaciones         | NULL   |
+|            3 |   1 | NULL               | 1#8    |
+|            3 |   2 | NULL               | 1.0    |
+|            3 |   3 | viaje_negocios     | NULL   |
++--------------+-----+--------------------+--------+
+17 rows in set (0.00 sec)
+mysql> select * from horario;
++------------+--------------+
+| horario_id | plantilla_id |
++------------+--------------+
+|          1 |            5 |
+|          2 |            1 |
+|          3 |            3 |
+|          4 |            2 |
+|          5 |            4 |
++------------+--------------+
+mysql> desc detalle_horario;
++--------------------+-------------+------+-----+---------+-------+
+| Field              | Type        | Null | Key | Default | Extra |
++--------------------+-------------+------+-----+---------+-------+
+| horario_id         | int         | NO   | PRI | NULL    |       |
+| hora_salida        | date        | NO   | PRI | NULL    |       |
+| hora_entrada       | date        | NO   |     | NULL    |       |
+| codigo_incapacidad | varchar(25) | YES  |     | NULL    |       |
++--------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+mysql> insert into detalle_horario (horario_id,hora_entrada,hora_salida,codigo_incapacidad) values (1, '2025/02/8 10:00' , '2025/02/8 06:00' , 'vaca
+ciones');
+Query OK, 1 row affected, 4 warnings (0.01 sec)
+mysql> select * from detalle_horario;
++------------+-------------+--------------+--------------------+
+| horario_id | hora_salida | hora_entrada | codigo_incapacidad |
++------------+-------------+--------------+--------------------+
+|          1 | 2025-02-08  | 2025-02-08   | vacaciones         |
+|          1 | 2025-02-27  | 2025-02-27   | vacaciones         |
++------------+-----------
+  2 rows in set (0.00 sec)
+mysql> CREATE TABLE usuarios (
+    -> idx int(20) NOT NULL,
+    -> nombre varchar(100) NOT NULL,
+    -> apellidos varchar(100) NOT NULL,
+    -> departamento varchar(100) NOT NULL,
+    -> PRIMARY KEY (nombre,apellidos)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+mysql> INSERT into usuarios (idx, nombre, apellidos, departamento) values (1 'oscar' , 'gonzales' , 'cbtis-246');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use
+ near ''oscar' , 'gonzales' , 'cbtis-246')' at line 1
+mysql> INSERT into usuarios (idx, nombre, apellidos, departamento) values (1, 'oscar' , 'gonzales' , 'cbtis-246');
+Query OK, 1 row affected (0.00 sec)
+mysql> INSERT into usuarios (idx, nombre, apellidos, departamento) values (4, 'michelle' , 'garcia' , 'cbtis-246');
+Query OK, 1 row affected (0.00 sec)
+mysql> INSERT into usuarios (idx, nombre, apellidos, departamento) values (4, 'michelle' , 'garcia' , 'cbtis-246');
+ERROR 1062 (23000): Duplicate entry 'michelle-garcia' for key 'usuarios.PRIMARY'
+mysql> Query OK, 1 row affected (0.00 sec)
+    -> INSERT into usuarios (idx, nombre, apellidos, departamento) values (7, 'alondra' , 'rodriguez' , 'cbtis-246');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use
+ near 'Query OK, 1 row affected (0.00 sec)
+INSERT into usuarios (idx, nombre, apellidos' at line 1
+mysql> INSERT into usuarios (idx, nombre, apellidos, departamento) values (10, 'emma' , 'perez' , 'cbtis-246');
+Query OK, 1 row affected (0.00 sec)
+mysql> INSERT into usuarios (idx, nombre, apellidos, departamento) values (11, 'angell' , 'gonzales' , 'cbtis-246');
+Query OK, 1 row affected (0.00 sec)
+mysql> INSERT into usuarios (idx, nombre, apellidos, departamento) values (12, 'daniela' , 'canal' , 'cbtis-246');
+Query OK, 1 row affected (0.00 sec)
+mysql> INSERT into usuarios (idx, nombre, apellidos, departamento) values (15, 'armando' , 'sanchez' , 'cbtis-246');
+Query OK, 1 row affected (0.01 sec)
+mysql> INSERT into usuarios (idx, nombre, apellidos, departamento) values (16, 'sofia' , 'lopez' , 'cbtis-246');
+Query OK, 1 row affected (0.03 sec)
+mysql> INSERT into usuarios (idx, nombre, apellidos, departamento) values (17, 'valentina' , 'morales' , 'cbtis-246');
+Query OK, 1 row affected (0.00 sec)
+mysql> INSERT into usuarios (idx, nombre, apellidos, departamento) values (18, 'ximena' , 'gonzales' , 'cbtis-246');
+Query OK, 1 row affected (0.02 sec)
+mysql> SELECT * from usuarios;
++-----+-----------+-----------+--------------+
+| idx | nombre    | apellidos | departamento |
++-----+-----------+-----------+--------------+
+|  11 | angell    | gonzales  | cbtis-246    |
+|  15 | armando   | sanchez   | cbtis-246    |
+|  12 | daniela   | canal     | cbtis-246    |
+|  10 | emma      | perez     | cbtis-246    |
+|   4 | michelle  | garcia    | cbtis-246    |
+|   1 | oscar     | gonzales  | cbtis-246    |
+|  16 | sofia     | lopez     | cbtis-246    |
+|  17 | valentina | morales   | cbtis-246    |
+|  18 | ximena    | gonzales  | cbtis-246    |
++-----+-----------+-----------+--------------+
+9 rows in set (0.00 sec)
+
