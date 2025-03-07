@@ -1,0 +1,117 @@
+CREATE TABLE 
+    ->     id int (16) NOT NULL,
+    ->     username varchar(50) NOT NULL,
+    ->     password varchar(50) NOT NULL,
+    ->     PRIMARY KEY (id)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+mysql> CREATE TABLE UserScorePicks(
+    ->     id int (16) NOT NULL,
+    ->     hockeyGameId int (13) NOT NULL,
+    ->     team1Score int (13) NOT NULL,
+    ->     team2Score int (13) NOT NULL,
+    ->     userId int (13) NOT NULL,
+    ->     PRIMARY KEY (id)
+    -> );
+Query OK, 0 rows affected, 5 warnings (0.03 sec)
+mysql> CREATE TABLE HockeyTeam(
+    ->     id int (16) NOT NULL,
+    ->     name varchar(100) NOT NULL,
+    ->     logo varchar(100),
+    ->     PRIMARY KEY (id)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+mysql> CREATE TABLE HockeyTeamPlayer(
+    ->     id int (16) NOT NULL,
+    ->     hockeyTeamId int (13) NOT NULL,
+firstName varchar(25) NOT NULL,
+    ->     lastName varchar(25) NOT NULL,
+    ->     jerseyNum int (13),
+    ->     position varchar(30),
+    ->     PRIMARY KEY (id)
+    -> );
+Query OK, 0 rows affected, 3 warnings (0.03 sec)
+
+mysql> CREATE TABLE UserInfo(
+    ->     id int (16) NOT NULL,
+    ->     firstName varchar(25) NOT NULL,
+    ->     lastName varchar(25) NOT NULL,
+    ->     email varchar(25) NOT NULL,
+    ->     round1Points int (13),
+    ->     round2Points int (13),
+    ->     round3Points int (13),
+    ->     round4Points int (13),
+    ->     PRIMARY KEY (id)
+    -> );
+Query OK, 0 rows affected, 5 warnings (0.03 sec)
+
+mysql> show tables;
+Tables_in_Ale089013$default |
++-----------------------------+
+| GameScores                  |
+| HockeyGame                  |
+| HockeyTeam                  |
+| HockeyTeamPlayer            |
+| RoundStats                  |
+| User                        |
+| UserInfo                    |
+| UserScorePicks              |
+| UserStatsPicks              |
+| detalle_horario             |
+| horario                     |
+| plantilla_detalle_horario   |
+| playoffround                |
+| usuarios                    |
++-----------------------------+
+14 rows in set (0.01 sec)
+mysql> desc GameScores;
++------------+------+------+-----+---------+-------+
+| Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| id         | int  | NO   | PRI | NULL    |       |
+| team1Score | int  | NO   |     | NULL    |       |
+| team2Score | int  | NO   |     | NULL    |       |
++------------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+mysql> INSERT into GameScores(id,team1Score,team2Score)
+    -> values('1','2','3');
+Query OK, 1 row affected (0.00 sec)
+mysql> desc  HockeyGame;
+ Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| id         | int  | NO   | PRI | NULL    |       |
+| team1Score | int  | NO   |     | NULL    |       |
+| team2Score | int  | NO   |     | NULL    |       |
++------------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+mysql> INSERT into GameScores(id,team1Score,team2Score)
+    -> values('1','2','3');
+Query OK, 1 row affected (0.00 sec)
+mysql> desc  HockeyGame;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id          | int          | NO   | PRI | NULL    |       |
+| roundId     | int          | NO   |     | NULL    |       |
+| startTime   | date         | NO   | PRI | NULL    |       |
+| endTime     | date         | NO   |     | NULL    |       |
+| description | varchar(255) | YES  |     | NULL    |       |
+| team1Id     | int          | NO   |     | NULL    |       |
+| team2Id     | int          | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+INSERT into HockeyGame(id,roundId,startTime,endTime,description,team1Id,team2Id)
+    -> values('1','2','2025/07/01','2025/07/01','134','5','6');
+Query OK, 1 row affected, 2 warnings (0.01 sec)
+mysql> desc HockeyTeam;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| id    | int          | NO   | PRI | NULL    |       |
+| name  | varchar(100) | NO   |     | NULL    |       |
+| logo  | varchar(100) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+mysql> INSERT into HockeyTeam(id,name,logo,)   
+    -> values('
+  
