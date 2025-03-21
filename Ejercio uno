@@ -1,0 +1,18 @@
+CREATE TABLE ‘Tabla_Original’(
+‘Customer ID’ (6)NOT NULL,
+‘Type Phone’ varchar(20),
+‘Number’ varchar(20)
+);
+
+CUSTOMER ID( 
+(1001)
+(1001)
+(1001)
+(2002)
+(2002)
+(3003)
+);
+
+Type Phone(
+(1, ‘Celular’,’33-1045-2302’),
+(1, ‘trabajo’,)
