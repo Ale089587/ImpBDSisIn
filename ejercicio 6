@@ -1,0 +1,152 @@
+mysql> use Ale089013$default;
+Database changed
+mysql> CREATE TABLE Productos (
+    ->      Producto VARCHAR(50),
+    ->      Cantidad INT
+    ->      );
+ERROR 1050 (42S01): Table 'Productos' already exists
+mysql> NSERT INTO Productos (Producto, Cantidad)
+    ->      VALUES
+    ->      ('Lápiz', 3),
+    ->      ('Borrador', 4),
+    ->      ('Cuaderno', 2);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use
+ near 'NSERT INTO Productos (Producto, Cantidad)
+     VALUES
+     ('Lápiz', 3),
+     (' at line 1
+mysql> INSERT INTO Productos (Producto, Cantidad)
+    ->      VALUES
+    ->      ('Lápiz', 3),
+    ->      ('Borrador', 4),
+    ->      ('Cuaderno', 2);
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+mysql> CREATE TABLE Numeros (
+    ->      Numero INT
+    ->      );
+ERROR 1050 (42S01): Table 'Numeros' already exists
+mysql> CREATE TABLE Numeros (
+    ->      Numero INT
+    ->      );
+ERROR 1050 (42S01): Table 'Numeros' already exists
+mysql>  INSERT INTO Numeros1 (Numero)
+    ->      VALUES (1), (2), (3), (4), (5);
+ERROR 1146 (42S02): Table 'Ale089013$default.Numeros1' doesn't exist
+mysql>  SELECT 
+    ->       p.Producto,
+    ->       1 AS Cantidad
+    ->      FROM 
+    ->          Productos p
+    ->      JOIN 
+    ->          Numeros1 n
+    ->      ON 
+    ->         n.Numero <= p.Cantidad;
+ERROR 1146 (42S02): Table 'Ale089013$default.Numeros1' doesn't exist
+mysql> CREATE TABLE asientos (
+    ->      num_asiento INT
+    ->      );
+ERROR 1050 (42S01): Table 'asientos' already exists
+mysql> 
+mysql> SELECT * FROM asientos;
+Empty set (0.00 sec)
+mysql> SELECT espacio_inicio, espacio_final
+    ->      FROM (
+    ->          SELECT 
+    ->              LAG(num_asiento + 1) OVER (ORDER BY num_asiento) AS espacio_inicio,
+    ->              num_asiento - 1 AS espacio_final
+    ->          FROM asientos
+    ->      ) subquery
+    ->     WHERE espacio_inicio <= espacio_final;
+Empty set (0.01 sec)
+mysql> SELECT 
+    ->     ->         COALESCE(LAG(num_asiento + 1) OVER (ORDER BY num_asiento), 1) AS espacio_inicio,
+    ->              num_asiento - 1  espacio_final
+    ->          FROM asientos
+    ->          UNION ALL
+    ->          SELECT MAX(num_asiento) + 1  espacio_inicio, NULL  espacio_final
+    ->          FROM asientos
+    ->      )
+    ->      SELECT espacio_inicio, espacio_final
+    ->      FROM espacios
+    ->     WHERE espacio_inicio <= espacio_final  espacio_final  NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use
+ near '->         COALESCE(LAG(num_asiento + 1) OVER (ORDER BY num_asiento), 1) AS espa' at line 2
+mysql> SELECT espacio_inicio, espacio_final
+    ->      FROM (
+    ->          SELECT 
+    ->          COALESCE(LAG(num_asiento + 1) OVER (ORDER BY num_asiento), 1) AS espacio_inicio,
+    ->              num_asiento - 1 AS espacio_final
+    ->          FROM asientos
+    ->          WHERE num_asiento <= 54 ) subquery
+    ->      WHERE espacio_inicio <= espacio_final AND espacio_inicio <= 54;
+Empty set (0.00 sec)
+mysql> SELECT SUM(espacio_final - espacio_inicio + 1) AS total_disponibles
+    ->      FROM (
+    ->          SELECT COALESCE(LAG(num_asiento + 1) OVER (ORDER BY num_asiento), 1) AS espacio_inicio,
+    ->                 num_asiento - 1 AS espacio_final
+    ->          FROM asientos
+    ->          WHERE num_asiento <= 54
+    ->     ) subquery
+    ->      WHERE espacio_inicio <= espacio_final;
++-------------------+
+| total_disponibles |
++-------------------+
+|              NULL |
++-------------------+
+1 row in set (0.00 sec)
+mysql> 
+mysql> CREATE TABLE periodos (
+    ->          inicio DATE,
+    ->          final DATE
+    ->      );
+ERROR 1050 (42S01): Table 'periodos' already exists
+mysql> INSERT INTO periodos VALUES
+    ->     ('2025-01-01', '2025-01-05'),
+    ->      ('2025-01-03', '2025-01-09'),
+    ->      ('2025-01-10', '2025-01-11'),
+    ->      ('2025-01-12', '2025-01-16'),
+    ->     ('2025-01-15', '2025-01-19');
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+mysql>  WITH periodos_ordenados AS (
+    ->          SELECT inicio, final,
+    ->                 LAG(final) OVER (ORDER BY inicio) AS final_anterior
+    ->          FROM periodos
+    ->      ),
+    ->      fusionados AS (
+    ->          SELECT inicio,
+    ->                 COALESCE(
+    ->                     MAX(final) OVER (PARTITION BY SUM(CASE WHEN inicio > final_anterior THEN 1 ELSE 0 END) OVER (ORDER BY inicio)),
+    ->                     final
+    ->                 ) AS final
+    ->          FROM periodos_ordenados
+    ->      )
+    ->      SELECT DISTINCT inicio, final
+    ->      FROM fusionados
+    ->      ORDER BY inicio;
+ERROR 3595 (HY000): You cannot nest a window function in the specification of window '<unnamed window>'.
+mysql> WITH periodos_ordenados AS (
+mysql> WITH periodos_ordenados AS (
+    ->          SELECT inicio, final,
+    ->                 LAG(final) OVER (ORDER BY inicio) AS final_anterior
+    ->          FROM periodos
+    ->      ),
+    ->      agrupados AS (
+    ->          SELECT inicio, final,
+    ->                 SUM(CASE WHEN inicio > final_anterior THEN 1 ELSE 0 END) OVER (ORDER BY inicio) AS grupo
+    ->          FROM periodos_ordenados
+    ->      )
+    ->      SELECT MIN(inicio) AS inicio, MAX(final) AS final
+    ->      FROM agrupados
+    ->      GROUP BY grupo
+    ->      ORDER BY inicio;
++------------+------------+
+| inicio     | final      |
++------------+------------+
+| 2025-01-01 | 2025-01-09 |
+| 2025-01-10 | 2025-01-11 |
+| 2025-01-12 | 2025-01-19 |
++------------+------------+
+3 rows in set (0.01 sec)
+mysql> 
